@@ -50,7 +50,7 @@ class _NewUserScreenState extends State<NewUserScreen> {
         child: Column(
           children: [
             const TextFieldWidget(
-              icon: Icons.person_2,
+              icon: Icons.person,
               label: 'Nombre',
               placeholder: 'Ingrese nombre',
             ),

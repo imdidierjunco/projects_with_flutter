@@ -2,15 +2,15 @@ import 'package:all_flutter/home_projects.dart';
 import 'package:all_flutter/list_users/display/screens/screens.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
+class ListUserHomeScreen extends StatefulWidget {
   static String routeName = 'user-home';
 
-  const HomeScreen({super.key});
+  const ListUserHomeScreen({super.key});
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ListUserHomeScreen> createState() => _ListUserHomeScreen();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ListUserHomeScreen extends State<ListUserHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -13,9 +13,9 @@ class ListUserMain extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: HomeScreen.routeName,
+      initialRoute: ListUserHomeScreen.routeName,
       routes: {
-        HomeScreen.routeName: (_) => const HomeScreen(),
+        ListUserHomeScreen.routeName: (_) => const ListUserHomeScreen(),
         NewUserScreen.routeName: (_) => const NewUserScreen(),
         DetailUserScreen.routeName: (_) => const DetailUserScreen(),
         HomeProjectsScreen.routeName: (_) => const HomeProjectsScreen(),

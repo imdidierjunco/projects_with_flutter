@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../widgets/widgets.dart';
 
 class FacebookUIHomeScreen extends StatefulWidget {
   static String routeName = 'facebook-ui-home';
@@ -22,55 +23,48 @@ class _FacebookUIHomeScreen extends State<FacebookUIHomeScreen> {
           color: Colors.blueAccent,
           width: 140,
         ),
-        actions: [
-          _circleButton(
-            Colors.grey,
-            Icons.search,
+        actions: const [
+          CircleButton(
+            colorDecoration: Colors.grey,
+            icon: Icons.search,
           ),
-          const SizedBox(
+          SizedBox(
             width: 10,
           ),
-          _circleButton(
-            Colors.red,
-            Icons.notifications,
+          CircleButton(
+            colorDecoration: Colors.red,
+            icon: Icons.notifications,
           ),
-          const SizedBox(
+          SizedBox(
             width: 10,
           ),
-          _circleButton(
-            Colors.lightBlue,
-            Icons.people,
+          CircleButton(
+            colorDecoration: Colors.lightBlue,
+            icon: Icons.people,
+            showBadge: true,
           ),
-          const SizedBox(
+          SizedBox(
             width: 10,
           ),
-          _circleButton(
-            Colors.blue,
-            Icons.messenger_sharp,
+          CircleButton(
+            colorDecoration: Colors.blue,
+            icon: Icons.messenger_sharp,
           ),
-          const SizedBox(
+          SizedBox(
             width: 10,
           ),
         ],
       ),
-      body: const Center(
-        child: Text('Hola Mundo'),
-      ),
-    );
-  }
-
-  Container _circleButton(Color colorDecoration, IconData icon) {
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
-        color: colorDecoration,
-        shape: BoxShape.circle,
-      ),
-      child: Icon(
-        icon,
-        color: Colors.white,
-        size: 25,
+      body: ListView(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+        ).copyWith(
+          top: 17,
+        ),
+        children: const [
+          WhatIsOnYourMind(),
+          QuickAction(),
+        ],
       ),
     );
   }

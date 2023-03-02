@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         HomeProjectsScreen.routeName: (_) => const HomeProjectsScreen(),
         ListUserMain.routeName: (_) => const ListUserMain(),
+        FacebookUIMain.routeName: (_) => const FacebookUIMain(),
       },
     );
   }

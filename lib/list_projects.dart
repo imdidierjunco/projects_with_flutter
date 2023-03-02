@@ -9,5 +9,10 @@ class ListProject {
           'Listar, eliminar y agregar usuarios, además consumirlos de una API',
       routeName: ListUserMain.routeName,
     ),
+    ProjectModel(
+      name: 'Facebook UI',
+      details: 'Diseño de la UI de Facebook',
+      routeName: FacebookUIMain.routeName,
+    ),
   ];
 }

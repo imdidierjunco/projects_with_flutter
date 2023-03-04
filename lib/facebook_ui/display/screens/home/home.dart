@@ -1,4 +1,5 @@
 import 'package:all_flutter/facebook_ui/data/models/publication.dart';
+import 'package:all_flutter/home_projects.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -96,7 +97,11 @@ class _FacebookUIHomeScreen extends State<FacebookUIHomeScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).pop(),
+        backgroundColor: Colors.blueGrey,
+        onPressed: () => Navigator.pushNamed(
+          context,
+          HomeProjectsScreen.routeName,
+        ),
         child: const Icon(
           Icons.exit_to_app,
         ),

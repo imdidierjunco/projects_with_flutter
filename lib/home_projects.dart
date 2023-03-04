@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'list_projects.dart';
 
 class HomeProjectsScreen extends StatefulWidget {
-  static String routeName = '/';
+  static String routeName = 'home-projects';
 
   const HomeProjectsScreen({super.key});
   @override

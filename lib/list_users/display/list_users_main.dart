@@ -19,6 +19,8 @@ class ListUserMain extends StatelessWidget {
         NewUserScreen.routeName: (_) => const NewUserScreen(),
         DetailUserScreen.routeName: (_) => const DetailUserScreen(),
         HomeProjectsScreen.routeName: (_) => const HomeProjectsScreen(),
+        NewPostScreen.routeName: (_) => const NewPostScreen(),
+        DetailPostScreen.routeName: (_) => DetailPostScreen(),
       },
     );
   }

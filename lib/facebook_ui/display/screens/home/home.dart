@@ -1,3 +1,6 @@
+import 'package:all_flutter/facebook_ui/data/models/publication.dart';
+import 'package:all_flutter/home_projects.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../widgets/widgets.dart';
@@ -13,6 +16,27 @@ class FacebookUIHomeScreen extends StatefulWidget {
 class _FacebookUIHomeScreen extends State<FacebookUIHomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final faker = Faker();
+    final random = faker.randomGenerator;
+    final List<Publications> publications = [];
+    for (var i = 0; i < 50; i++) {
+      final publication = Publications(
+        title: faker.lorem.sentence(),
+        createPost: faker.date.dateTime(),
+        imageUrl: faker.image.image(),
+        commentCount: random.integer(20000, min: 50),
+        shareCount: random.integer(10000, min: 10),
+        user: User(
+          avatar: faker.image.image(),
+          userName: faker.person.lastName(),
+        ),
+        currentUseReaction: Emoji.values[random.integer(
+          Emoji.values.length - 1,
+          min: 0,
+        )],
+      );
+      publications.add(publication);
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -56,15 +80,31 @@ class _FacebookUIHomeScreen extends State<FacebookUIHomeScreen> {
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-        ).copyWith(
-          top: 17,
-        ),
-        children: const [
-          WhatIsOnYourMind(),
-          QuickAction(),
+        children: [
+          const WhatIsOnYourMind(),
+          const QuickAction(),
+          const Stories(),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (_, index) {
+              return PublicationItem(
+                publications: publications[index],
+              );
+            },
+            itemCount: publications.length,
+          )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blueGrey,
+        onPressed: () => Navigator.pushNamed(
+          context,
+          HomeProjectsScreen.routeName,
+        ),
+        child: const Icon(
+          Icons.exit_to_app,
+        ),
       ),
     );
   }

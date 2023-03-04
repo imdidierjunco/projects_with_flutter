@@ -1,3 +1,4 @@
+import 'package:all_flutter/list_users/display/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -81,11 +82,13 @@ class DetailUserScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: const FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.greenAccent,
-        onPressed: null,
-        child: Icon(
-          Icons.add,
+        onPressed: () {
+          Navigator.pushNamed(context, NewPostScreen.routeName);
+        },
+        child: const Icon(
+          Icons.note_add,
         ),
       ),
     );
@@ -104,15 +107,17 @@ class DetailUserScreen extends StatelessWidget {
             );
           },
           itemBuilder: (context, index) {
-            return const ListTile(
-              leading: Icon(
+            return ListTile(
+              leading: const Icon(
                 Icons.file_copy,
                 color: Colors.blueAccent,
               ),
-              title: Text('Nombre del post'),
-              trailing: Icon(
+              title: const Text('Nombre del post'),
+              trailing: const Icon(
                 Icons.arrow_forward_ios,
               ),
+              onTap: () =>
+                  Navigator.pushNamed(context, DetailPostScreen.routeName),
             );
           },
         ),

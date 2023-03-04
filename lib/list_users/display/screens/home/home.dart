@@ -51,7 +51,7 @@ class _ListUserHomeScreen extends State<ListUserHomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, 'new_user');
+          Navigator.pushNamed(context, NewUserScreen.routeName);
         },
         backgroundColor: Colors.greenAccent,
         child: const Icon(Icons.person_add),

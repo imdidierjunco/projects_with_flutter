@@ -1,3 +1,4 @@
+import 'package:all_flutter/list_users/data/models/models.dart';
 import 'package:flutter/material.dart';
 
 class DetailPostScreen extends StatelessWidget {
@@ -7,6 +8,8 @@ class DetailPostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final detailsPost = ModalRoute.of(context)?.settings.arguments as PostModel;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -33,14 +36,14 @@ class DetailPostScreen extends StatelessWidget {
           children: [
             _itemCard(
               'Título del post',
-              'titulo del post',
+              detailsPost.title!,
             ),
             const SizedBox(
               height: 15,
             ),
             _itemCard(
               'Contenido del post',
-              'contenido del post',
+              detailsPost.body!,
             ),
           ],
         ),

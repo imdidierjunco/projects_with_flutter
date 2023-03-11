@@ -2,6 +2,9 @@ import 'package:all_flutter/list_users/display/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../data/models/models.dart';
+import '../../../services/http.dart';
+
 class DetailUserScreen extends StatelessWidget {
   static String routeName = 'detail-user';
 
@@ -9,6 +12,8 @@ class DetailUserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = ModalRoute.of(context)?.settings.arguments;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -73,12 +78,12 @@ class DetailUserScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _title('Información del usuario'),
-            _infoUser(),
+            _infoUser(user as UserModel),
             const SizedBox(
               height: 15,
             ),
             _title('Lista de posts'),
-            _listPost(context),
+            _listPost(context, user.id!),
           ],
         ),
       ),
@@ -94,57 +99,83 @@ class DetailUserScreen extends StatelessWidget {
     );
   }
 
-  Card _listPost(BuildContext context) {
+  Card _listPost(BuildContext context, int idUser) {
+    final HttpService httpService = HttpService();
+
     return Card(
       elevation: 5,
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.5,
-        child: ListView.separated(
-          itemCount: 8,
-          separatorBuilder: (context, index) {
-            return const SizedBox(
-              height: 5,
-            );
-          },
-          itemBuilder: (context, index) {
-            return ListTile(
-              leading: const Icon(
-                Icons.file_copy,
-                color: Colors.blueAccent,
-              ),
-              title: const Text('Nombre del post'),
-              trailing: const Icon(
-                Icons.arrow_forward_ios,
-              ),
-              onTap: () =>
-                  Navigator.pushNamed(context, DetailPostScreen.routeName),
-            );
+        child: FutureBuilder(
+          future: httpService.getPostUser(idUser),
+          builder: (context, snapshot) {
+            return snapshot.hasData
+                ? ListView.separated(
+                    itemCount: snapshot.data!.length,
+                    separatorBuilder: (context, index) {
+                      return const Divider();
+                    },
+                    itemBuilder: (context, index) {
+                      final post = snapshot.data![index];
+
+                      return snapshot.data!.isNotEmpty
+                          ? ListTile(
+                              leading: const Icon(
+                                Icons.file_copy,
+                                color: Colors.blueAccent,
+                              ),
+                              title: Text(post.title!),
+                              trailing: const Icon(
+                                Icons.arrow_forward_ios,
+                              ),
+                              onTap: () => Navigator.pushNamed(
+                                context,
+                                DetailPostScreen.routeName,
+                                arguments: post,
+                              ),
+                            )
+                          : const Center(
+                              child: Text(
+                                'No tiene post',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            );
+                    },
+                  )
+                : const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.greenAccent,
+                    ),
+                  );
           },
         ),
       ),
     );
   }
 
-  Card _infoUser() {
+  Card _infoUser(UserModel user) {
     return Card(
       elevation: 5,
       child: Column(
         children: [
           _item(
             Icons.person,
-            'Nombre',
+            user.name!,
           ),
           _item(
             Icons.mail,
-            'Correo',
+            user.email!,
           ),
           _item(
             Icons.supervised_user_circle_rounded,
-            'Sexo',
+            user.gender!,
           ),
           _item(
             Icons.circle,
-            'Activo',
+            user.status!,
             true,
           ),
         ],

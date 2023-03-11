@@ -1,5 +1,6 @@
 import 'package:all_flutter/home_projects.dart';
 import 'package:all_flutter/list_users/display/screens/screens.dart';
+import 'package:all_flutter/list_users/services/http.dart';
 import 'package:flutter/material.dart';
 
 class ListUserHomeScreen extends StatefulWidget {
@@ -11,6 +12,7 @@ class ListUserHomeScreen extends StatefulWidget {
 }
 
 class _ListUserHomeScreen extends State<ListUserHomeScreen> {
+  final HttpService _httpService = HttpService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,22 +38,40 @@ class _ListUserHomeScreen extends State<ListUserHomeScreen> {
         ),
         backgroundColor: Colors.greenAccent,
       ),
-      body: ListView.separated(
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return ListTile(
-            onTap: () =>
-                Navigator.pushNamed(context, DetailUserScreen.routeName),
-            title: const Text('Nombre'),
-            subtitle: const Text('Email'),
-            trailing: const Icon(Icons.arrow_forward_ios),
-          );
+      body: FutureBuilder(
+        future: _httpService.getAllUsers(),
+        builder: (context, snapshot) {
+          return snapshot.hasData
+              ? ListView.separated(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    final user = snapshot.data![index];
+                    return ListTile(
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        DetailUserScreen.routeName,
+                        arguments: user,
+                      ),
+                      title: Text(user.name!),
+                      subtitle: Text(user.email!),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                    );
+                  },
+                  separatorBuilder: (context, index) => const Divider(),
+                )
+              : const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.greenAccent,
+                  ),
+                );
         },
-        separatorBuilder: (context, index) => const Divider(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, NewUserScreen.routeName);
+          Navigator.pushNamed(
+            context,
+            NewUserScreen.routeName,
+          );
         },
         backgroundColor: Colors.greenAccent,
         child: const Icon(Icons.person_add),
